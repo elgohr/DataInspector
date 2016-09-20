@@ -1,51 +1,41 @@
 package de.elgohr.datainspector
 
-import groovy.json.JsonSlurper
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.context.embedded.LocalServerPort
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.boot.test.SpringApplicationContextLoader
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.test.context.web.WebAppConfiguration
+import net.minidev.json.JSONArray
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
 
-import javax.persistence.Entity
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@ContextConfiguration(
-        loader = SpringApplicationContextLoader.class,
-        classes = SpringBootStarter.class)
-@WebAppConfiguration
-@IntegrationTest
 class DataInspectorIntegrationTest extends Specification {
-
-    @Entity
-    class TestEntity {
-        private String name
-        int age
-    }
-
-    @LocalServerPort
-    def port
-
-    JsonSlurper jsonSlurper
-
-    def setup() {
-        jsonSlurper = new JsonSlurper()
-    }
 
     def "should publish the entities on an endpoint in json format" () {
         given:
-        def url = new URL("http://localhost:${port}/data")
+        def entityInspector = Mock(EntityInspector)
+        def mockMvc = MockMvcBuilders.standaloneSetup(
+                new DataInspectorController(entityInspector: entityInspector)
+        ).build()
+
+        def expectedValues = new JSONArray()
+        expectedValues.add("attribute1")
+        expectedValues.add("attribute2")
+
         when:
-        def response = jsonSlurper.parse(url)
+        def response = mockMvc.perform(get('/data'))
+
         then:
-        response.contains("TestEntity")
-        response.contains("name")
-        response.contains("age")
+        1 * entityInspector.getAttributesPerClass() >> {
+            def result = new HashMap<>()
+            def attributes = new LinkedList()
+            attributes.add("attribute1")
+            attributes.add("attribute2")
+            result.put("class1", attributes)
+            return result
+        }
+        response
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath('$.class1').value(expectedValues))
     }
 }

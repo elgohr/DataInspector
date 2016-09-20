@@ -10,7 +10,7 @@ class DataInspectorControllerTest extends Specification {
         def entityInspectorController = new DataInspectorController(
                 entityInspector: entityInspector)
         when:
-        def response = entityInspectorController.publishData()
+        HashMap response = entityInspectorController.publishData()
         then:
         1 * entityInspector.getAttributesPerClass() >> {
             def result = new HashMap<>()
@@ -20,8 +20,8 @@ class DataInspectorControllerTest extends Specification {
             result.put("class1", attributes)
             return result
         }
-        response.contains("class1")
-        response.contains("attribute1")
-        response.contains("attribute2")
+        response.containsKey("class1")
+        response.get("class1").contains("attribute1")
+        response.get("class1").contains("attribute2")
     }
 }

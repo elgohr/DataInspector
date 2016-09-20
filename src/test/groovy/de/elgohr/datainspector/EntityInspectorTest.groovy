@@ -1,22 +1,11 @@
 package de.elgohr.datainspector
 
+import de.elgohr.datainspector.testclasses.TestEntity
 import spock.lang.Specification
-
-import javax.persistence.Entity
 
 class EntityInspectorTest extends Specification {
 
     def inspector = new EntityInspector()
-
-    class TestClass {
-        // This class should be irrelevant for the scan
-    }
-
-    @Entity
-    class TestEntity {
-        private String name
-        int age
-    }
 
     def "should inspect only classes, which are annotated with @Entity"() {
         when:

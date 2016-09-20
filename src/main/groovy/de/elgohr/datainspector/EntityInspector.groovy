@@ -4,7 +4,6 @@ import org.reflections.Reflections
 import org.springframework.stereotype.Component
 
 import javax.persistence.Entity
-import java.lang.reflect.Field
 
 @Component
 class EntityInspector {
@@ -15,14 +14,14 @@ class EntityInspector {
 
     HashMap getAttributesPerClass() {
         def attributesPerClass = new HashMap()
-        for (Class<?> classEntity : classes) {
+        classes.each {
             def fields = new LinkedList<>()
-            for (Field field : classEntity.getDeclaredFields()) {
-                if (!blockedFields.contains(field.getName())) {
-                    fields.add(field.getName())
+            it.getDeclaredFields().each {
+                if (!blockedFields.contains(it.getName())) {
+                    fields.add(it.getName())
                 }
             }
-            attributesPerClass.put(classEntity.getName(), fields)
+            attributesPerClass.put(it.getName(), fields)
         }
         return attributesPerClass
     }
