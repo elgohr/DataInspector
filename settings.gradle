@@ -1,2 +1,4 @@
 rootProject.name = 'DataInspector'
+include 'InspectorLibrary'
+include 'IntegrationTestclient'
 

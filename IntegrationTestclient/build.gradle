@@ -1,0 +1,33 @@
+group 'de.elgohr'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
+    compile "javax.persistence:persistence-api:1.0"
+
+    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    testCompile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
+    testCompile "org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE"
+}
