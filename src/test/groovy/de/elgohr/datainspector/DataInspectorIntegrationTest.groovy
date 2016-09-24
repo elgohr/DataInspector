@@ -10,12 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DataInspectorIntegrationTest extends Specification {
 
-    def "should publish the entities on an endpoint in json format" () {
+    def "should publish the entities on an endpoint in json format"() {
         given:
         def entityInspector = Mock(EntityInspector)
-        def mockMvc = MockMvcBuilders.standaloneSetup(
-                new DataInspectorController(entityInspector: entityInspector)
-        ).build()
+        def mockMvc = MockMvcBuilders
+                .standaloneSetup(new DataInspectorController(entityInspector))
+                .build()
 
         def expectedValues = new JSONArray()
         expectedValues.add("attribute1")

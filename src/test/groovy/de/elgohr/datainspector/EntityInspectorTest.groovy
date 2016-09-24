@@ -9,7 +9,7 @@ class EntityInspectorTest extends Specification {
 
     def "should inspect only classes, which are annotated with @Entity"() {
         when:
-        def classes = inspector.getClasses()
+        def classes = inspector.entityClasses
         then:
         classes.size() == 1
         classes.contains(TestEntity)

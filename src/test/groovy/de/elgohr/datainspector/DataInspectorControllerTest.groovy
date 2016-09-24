@@ -4,11 +4,10 @@ import spock.lang.Specification
 
 class DataInspectorControllerTest extends Specification {
 
-    def "should publish the entities on an endpoint" () {
+    def "should publish the entities on an endpoint"() {
         given:
         def entityInspector = Mock(EntityInspector)
-        def entityInspectorController = new DataInspectorController(
-                entityInspector: entityInspector)
+        def entityInspectorController = new DataInspectorController(entityInspector)
         when:
         HashMap response = entityInspectorController.publishData()
         then:
