@@ -1,14 +1,13 @@
 package test;
 
+import de.datainspector.DataInspector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"de.elgohr.datainspector"})
-public class TestAppl {
+public class IntegratonAppl {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(TestAppl.class, args);
+        SpringApplication.run(IntegratonAppl.class, args);
     }
 }

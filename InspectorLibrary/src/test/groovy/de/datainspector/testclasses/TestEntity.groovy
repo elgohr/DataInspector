@@ -1,9 +1,9 @@
-package de.elgohr.datainspector.testclasses
+package de.datainspector.testclasses
 
 import javax.persistence.Entity
 
 @Entity
-class TestEntity {
+public class TestEntity {
 
     private String name
     int age

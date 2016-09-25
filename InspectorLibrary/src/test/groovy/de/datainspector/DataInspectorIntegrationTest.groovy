@@ -1,5 +1,7 @@
 package de.elgohr.datainspector
 
+import de.datainspector.DataInspectorController
+import de.datainspector.persistence.JpaEntityInspector
 import net.minidev.json.JSONArray
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
@@ -12,7 +14,7 @@ class DataInspectorIntegrationTest extends Specification {
 
     def "should publish the entities on an endpoint in json format"() {
         given:
-        def entityInspector = Mock(EntityInspector)
+        def entityInspector = Mock(JpaEntityInspector)
         def mockMvc = MockMvcBuilders
                 .standaloneSetup(new DataInspectorController(entityInspector))
                 .build()

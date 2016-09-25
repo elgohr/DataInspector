@@ -1,5 +1,6 @@
-package de.elgohr.datainspector;
+package de.datainspector;
 
+import de.datainspector.persistence.JpaEntityInspector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +13,18 @@ import java.util.Map;
 @RestController
 public class DataInspectorController {
 
-    private EntityInspector entityInspector;
+    private JpaEntityInspector jpaEntityInspector;
 
     @Autowired
-    DataInspectorController(EntityInspector entityInspector) {
-        this.entityInspector = entityInspector;
+    DataInspectorController(JpaEntityInspector jpaEntityInspector) {
+        this.jpaEntityInspector = jpaEntityInspector;
     }
 
     @RequestMapping(
             value = "/data",
             method = RequestMethod.GET,
             produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Map<String, LinkedList<String>> publishData() {
-        return entityInspector.getAttributesPerClass();
+    public Map<String, LinkedList<String>> publishInspectedData() {
+        return jpaEntityInspector.getAttributesPerClass();
     }
 }

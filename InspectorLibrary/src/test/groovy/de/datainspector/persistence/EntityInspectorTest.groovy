@@ -1,11 +1,23 @@
-package de.elgohr.datainspector
+package de.datainspector.persistence
 
-import de.elgohr.datainspector.testclasses.TestEntity
+import de.datainspector.persistence.JpaEntityInspector
+import de.datainspector.testclasses.TestEntity
 import spock.lang.Specification
 
 class EntityInspectorTest extends Specification {
 
-    def inspector = new EntityInspector()
+    JpaEntityInspector inspector
+
+    def setup() {
+        inspector = new JpaEntityInspector()
+    }
+
+    def "should return the inspectors name"() {
+        when:
+        def name = inspector.getInspectorName()
+        then:
+        name == "JpaEntityInspector"
+    }
 
     def "should inspect only classes, which are annotated with @Entity"() {
         when:

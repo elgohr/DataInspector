@@ -1,15 +1,17 @@
 package de.elgohr.datainspector
 
+import de.datainspector.DataInspectorController
+import de.datainspector.persistence.JpaEntityInspector
 import spock.lang.Specification
 
 class DataInspectorControllerTest extends Specification {
 
     def "should publish the entities on an endpoint"() {
         given:
-        def entityInspector = Mock(EntityInspector)
+        def entityInspector = Mock(JpaEntityInspector)
         def entityInspectorController = new DataInspectorController(entityInspector)
         when:
-        HashMap response = entityInspectorController.publishData()
+        HashMap response = entityInspectorController.publishInspectedData()
         then:
         1 * entityInspector.getAttributesPerClass() >> {
             def result = new HashMap<>()
