@@ -21,8 +21,8 @@ class DataInspectorControllerTest extends Specification {
             result.put("class1", attributes)
             return result
         }
-        response.containsKey("class1")
-        response.get("class1").contains("attribute1")
-        response.get("class1").contains("attribute2")
+        response.containsKey("persistence")
+        response.get("persistence").get("class1").contains("attribute1")
+        response.get("persistence").get("class1").contains("attribute2")
     }
 }

@@ -1,6 +1,5 @@
 package de.datainspector.persistence
 
-import de.datainspector.persistence.JpaEntityInspector
 import de.datainspector.testclasses.TestEntity
 import spock.lang.Specification
 

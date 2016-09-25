@@ -25,7 +25,7 @@ class LibraryIntegrationTest extends Specification {
     @Test
     def "/data endpoint should be available with the maven library and annotation"() {
         when:
-        String url="http://localhost:${port}/data"
+        String url = "http://localhost:${port}/data"
         def response = new RestTemplate().getForEntity(url, null, String.class)
 
         then:

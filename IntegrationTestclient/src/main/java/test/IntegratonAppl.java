@@ -1,6 +1,5 @@
 package test;
 
-import de.datainspector.DataInspector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
