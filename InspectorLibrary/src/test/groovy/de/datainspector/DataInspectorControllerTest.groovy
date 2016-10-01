@@ -1,5 +1,3 @@
-package de.elgohr.datainspector
-
 import de.datainspector.DataInspectorController
 import de.datainspector.persistence.JpaEntityInspector
 import spock.lang.Specification
