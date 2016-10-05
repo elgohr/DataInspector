@@ -1,20 +1,3 @@
-[![Build Status](https://travis-ci.org/elgohr/DataInspector.svg?branch=master)](https://travis-ci.org/elgohr/DataInspector)
-# DataInspector
-This library publishes the metadata of your Spring Boot application entities to the /data endpoint. The output format fits for typical [d3 visualizations](https://d3js.org/).
-
-```json
-{
-    "name": "my-crm",
-    "children": [{
-        "name": "persistence",
-        "children": [{
-            "name": "Customer",
-            "children": [{
-                "name": "name"
-            }, {
-                "name": "age"
-            }]
-        }]
-    }]
-}
-```
+# DataInspector-Dashboard
+Make the Dashboard available via Webserver and point the Url to a data-endpoint.
+![alt text](https://raw.githubusercontent.com/elgohr/DataInspector/master/examples/DataInspector-Dashboard/Dashboard-Example.png)
