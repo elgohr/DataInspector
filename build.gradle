@@ -9,7 +9,7 @@ task copyLibraryForTest(type: Copy) {
     into 'IntegrationTestclient/libs'
 }
 
-task build() {
+assemble() {
     def inspectorBuild = tasks.getByPath("InspectorLibrary:build")
     def integrationBuild = tasks.getByPath("IntegrationTestclient:build")
     def integrationCopyTask = tasks.getByPath("copyLibraryForTest")
