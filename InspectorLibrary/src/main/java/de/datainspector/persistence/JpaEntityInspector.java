@@ -6,7 +6,9 @@ import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class JpaEntityInspector extends AbstractDataInspector {

@@ -1,7 +1,6 @@
 package de.datainspector.persistence
 
 import de.datainspector.testclasses.TestEntity
-import de.datainspector.testclasses.Testclass
 import spock.lang.Specification
 
 class EntityInspectorTest extends Specification {
