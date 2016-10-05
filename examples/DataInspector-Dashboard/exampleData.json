@@ -1,0 +1,21 @@
+{
+  "name": "Appl1",
+  "children": [{
+    "name": "persistence",
+    "children": [{
+      "name": "class1",
+      "children": [{
+        "name": "attribute1"
+      }, {
+        "name": "attribute2"
+      }]
+    },{
+      "name": "class2",
+      "children": [{
+        "name": "attribute3"
+      }, {
+        "name": "attribute4"
+      }]
+    }]
+  }]
+}
