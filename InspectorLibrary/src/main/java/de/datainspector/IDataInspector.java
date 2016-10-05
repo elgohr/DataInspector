@@ -1,11 +1,9 @@
 package de.datainspector;
 
-import java.util.HashMap;
+import de.datainspector.businessobject.DataObject;
 
 public interface IDataInspector {
 
-    String getInspectorName();
-
-    HashMap getAttributesPerClass();
+    DataObject getDataObjects();
 
 }

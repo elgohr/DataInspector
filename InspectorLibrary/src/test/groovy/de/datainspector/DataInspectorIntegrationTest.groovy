@@ -1,4 +1,5 @@
 import de.datainspector.DataInspectorController
+import de.datainspector.businessobject.DataObject
 import de.datainspector.persistence.JpaEntityInspector
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
@@ -13,23 +14,40 @@ class DataInspectorIntegrationTest extends Specification {
     def "should publish the entities on an endpoint in json format"() {
         given:
         def entityInspector = Mock(JpaEntityInspector)
+        def dataInspectorController = new DataInspectorController(entityInspector)
         def mockMvc = MockMvcBuilders
-                .standaloneSetup(new DataInspectorController(entityInspector))
+                .standaloneSetup(dataInspectorController)
                 .build()
-        def entityMockData = ["class1": ["attribute1", "attribute2"] as LinkedList] as HashMap
-
-        def expectedJson = "{\"persistence\":{\"class1\":[\"attribute1\",\"attribute2\"]}}"
 
         when:
         def response = mockMvc.perform(get('/data'))
 
         then:
-        1 * entityInspector.getAttributesPerClass() >> {
-            return entityMockData
+        1 * entityInspector.getDataObjects() >> {
+            DataObject inspectorObject = new DataObject("persistence")
+            DataObject classLayer = new DataObject("class1")
+            classLayer.addChild(new DataObject("attribute1"))
+            classLayer.addChild(new DataObject("attribute2"))
+            inspectorObject.addChild(classLayer)
+            return inspectorObject
         }
         response
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(content().json(expectedJson))
+                .andExpect(content()
+                .json(
+                '{"name": "application",' +
+                        '  "children": [{' +
+                        '    "name": "persistence",' +
+                        '    "children": [{' +
+                        '      "name": "class1",' +
+                        '      "children": [{' +
+                        '        "name": "attribute1"' +
+                        '      }, {' +
+                        '        "name": "attribute2"' +
+                        '      }]' +
+                        '    }]' +
+                        '  }]' +
+                        '}'))
     }
 }

@@ -1,26 +1,32 @@
 import de.datainspector.DataInspectorController
+import de.datainspector.businessobject.DataObject
 import de.datainspector.persistence.JpaEntityInspector
+import groovy.json.JsonSlurper
 import spock.lang.Specification
 
 class DataInspectorControllerTest extends Specification {
 
     def "should publish the entities on an endpoint"() {
         given:
+        def jsonSlurper = new JsonSlurper()
         def entityInspector = Mock(JpaEntityInspector)
         def entityInspectorController = new DataInspectorController(entityInspector)
         when:
-        HashMap response = entityInspectorController.publishInspectedData()
+        def json = jsonSlurper.parseText(entityInspectorController.publishInspectedData())
+
         then:
-        1 * entityInspector.getAttributesPerClass() >> {
-            def result = new HashMap<>()
-            def attributes = new LinkedList()
-            attributes.add("attribute1")
-            attributes.add("attribute2")
-            result.put("class1", attributes)
-            return result
+        1 * entityInspector.getDataObjects() >> {
+            DataObject inspectorObject = new DataObject("persistence")
+            DataObject classLayer = new DataObject("class1")
+            classLayer.addChild(new DataObject("attribute1"))
+            classLayer.addChild(new DataObject("attribute2"))
+            inspectorObject.addChild(classLayer)
+            return inspectorObject
         }
-        response.containsKey("persistence")
-        response.get("persistence").get("class1").contains("attribute1")
-        response.get("persistence").get("class1").contains("attribute2")
+        json.name == "application"
+        json.children[0].name == "persistence"
+        json.children[0].children[0].name == "class1"
+        json.children[0].children[0].children[0].name == "attribute1"
+        json.children[0].children[0].children[1].name == "attribute2"
     }
 }

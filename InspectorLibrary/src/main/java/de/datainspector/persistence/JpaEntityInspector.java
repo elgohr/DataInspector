@@ -1,6 +1,7 @@
 package de.datainspector.persistence;
 
 import de.datainspector.AbstractDataInspector;
+import de.datainspector.businessobject.DataObject;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,8 @@ import java.util.*;
 
 @Component
 public class JpaEntityInspector extends AbstractDataInspector {
+
+    private final static String inspectorName = "persistence";
 
     private Set<Class<?>> entityClasses;
     private List blockedFields;
@@ -21,27 +24,23 @@ public class JpaEntityInspector extends AbstractDataInspector {
     }
 
     @Override
-    public String getInspectorName() {
-        return "JpaEntityInspector";
-    }
-
-    @Override
-    public HashMap getAttributesPerClass() {
-        HashMap attributesPerClass = new HashMap<String, LinkedList<String>>();
+    public DataObject getDataObjects() {
+        DataObject inspectorObject = new DataObject(inspectorName);
         entityClasses
                 .parallelStream()
                 .forEach((entityClass) -> {
-                    LinkedList fields = new LinkedList<String>();
+                    DataObject entityDataObject = new DataObject(entityClass.getName());
                     Arrays.stream(entityClass
                             .getDeclaredFields())
                             .forEach(declaredField -> {
                                 if (!blockedFields.contains(declaredField.getName())) {
-                                    fields.add(declaredField.getName());
+                                    DataObject fieldDataObject = new DataObject(declaredField.getName());
+                                    entityDataObject.addChild(fieldDataObject);
                                 }
                             });
-                    attributesPerClass.put(entityClass.getName(), fields);
+                    inspectorObject.addChild(entityDataObject);
                 });
-        return attributesPerClass;
+        return inspectorObject;
     }
 
 }

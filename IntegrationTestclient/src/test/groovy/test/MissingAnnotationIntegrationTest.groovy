@@ -6,10 +6,9 @@ import org.junit.runner.RunWith
 import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.http.HttpStatus
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 
@@ -17,32 +16,19 @@ import spock.lang.Specification
 @SpringApplicationConfiguration(classes = IntegratonAppl.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-@ActiveProfiles("integration")
-class LibraryIntegrationTest extends Specification {
+class MissingAnnotationIntegrationTest extends Specification {
 
     @LocalServerPort
     int port
 
     @Test
-    def "/data endpoint should be available with the maven library and annotation"() {
+    def "/data endpoint should not be present without annotation"() {
         when:
         String url = "http://localhost:${port}/data"
         def response = new RestTemplate().getForEntity(url, null, String.class)
 
         then:
-        response.statusCode == HttpStatus.OK
+        thrown(HttpClientErrorException)
     }
 
-    @Test
-    def "should fill in the application name from Spring config"() {
-        given:
-        def jsonSlurper = new JsonSlurper()
-        def url = new URL("http://localhost:${port}/data")
-
-        when:
-        def json = jsonSlurper.parse(url)
-
-        then:
-        json.name == "IntegrationTestApplication"
-    }
 }

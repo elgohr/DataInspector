@@ -1,6 +1,7 @@
 package de.datainspector.persistence
 
 import de.datainspector.testclasses.TestEntity
+import de.datainspector.testclasses.Testclass
 import spock.lang.Specification
 
 class EntityInspectorTest extends Specification {
@@ -11,13 +12,6 @@ class EntityInspectorTest extends Specification {
         inspector = new JpaEntityInspector()
     }
 
-    def "should return the inspectors name"() {
-        when:
-        def name = inspector.getInspectorName()
-        then:
-        name == "JpaEntityInspector"
-    }
-
     def "should inspect only classes, which are annotated with @Entity"() {
         when:
         def classes = inspector.entityClasses
@@ -26,36 +20,42 @@ class EntityInspectorTest extends Specification {
         classes.contains(TestEntity)
     }
 
+    def "should own inspector name on top"() {
+        when:
+        def dataObjects = inspector.getDataObjects()
+        then:
+        dataObjects.getName() == "persistence"
+    }
+
     def "should return inspected classes"() {
         when:
-        def listOfClasses = inspector.getAttributesPerClass()
+        def dataObjects = inspector.getDataObjects()
         then:
-        listOfClasses.size() == 1
-        listOfClasses.containsKey(TestEntity.getName())
+        dataObjects.getChildren()[0].getName() == TestEntity.class.getName()
     }
 
     def "should return the attributes of the classes in relation"() {
         when:
-        def listOfClasses = inspector.getAttributesPerClass()
-        def attributes = listOfClasses.get(TestEntity.getName())
+        def dataObjects = inspector.getDataObjects()
         then:
-        listOfClasses.size() == 1
-        listOfClasses.containsKey(TestEntity.getName())
-        attributes.size() == 2
-        attributes.contains("name")
-        attributes.contains("age")
+        dataObjects.getChildren()[0].getName() == TestEntity.class.getName()
+        dataObjects.getChildren()[0].getChildren().size() == 2
+        dataObjects.getChildren()[0].getChildren()[0].getName() == "name"
+        dataObjects.getChildren()[0].getChildren()[1].getName() == "age"
     }
 
     def "should not return the standard fields of the classes"() {
         when:
         def standardFields = Arrays.asList('$staticClassInfo', '__$stMC',
                 'metaClass', 'this$0', '$staticClassInfo$', '$callSiteArray')
-        def listOfClasses = inspector.getAttributesPerClass()
-        def attributes = listOfClasses.get(TestEntity.getName())
+        def attributes = inspector.getDataObjects().getChildren()
         then:
-        for (def standardField : standardFields) {
-            !attributes.contains(standardField)
-        }
+        standardFields.forEach({
+            standardField ->
+                attributes.forEach({
+                    attribute -> standardField != attribute
+                })
+        })
     }
 
 }
