@@ -1,11 +1,13 @@
 {
   "name": "Appl1",
+  "description": "This is an application",
   "children": [{
     "name": "persistence",
     "children": [{
       "name": "class1",
       "children": [{
-        "name": "attribute1"
+        "name": "attribute1",
+        "description": "Is used for x."
       }, {
         "name": "attribute2"
       }]

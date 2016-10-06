@@ -86,6 +86,11 @@ window.onload = function() {
                 return d._children ? "lightsteelblue" : "#fff";
             });
 
+        nodeEnter.append("svg:title")
+            .text(function(d) {
+                return d.description;
+            });
+
         nodeEnter.append("svg:text")
             .attr("y", function(d) {
                 return d.children || d._children ? -10 : 10;

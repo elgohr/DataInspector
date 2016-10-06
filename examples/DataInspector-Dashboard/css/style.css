@@ -2,10 +2,15 @@ body {
   font-family:Arial;
 }
 
+input {
+  width: 500px;
+}
+
 #menu {
   border-bottom: 1px #ccc solid;
   padding: 10px;
 }
+
 .node circle {
     cursor: pointer;
     fill: #fff;
@@ -14,7 +19,7 @@ body {
 }
 
 .node text {
-    font-size: 11px;
+    font-size: 13px;
 }
 
 path.link {
