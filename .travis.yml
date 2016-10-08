@@ -7,5 +7,3 @@ env:
   - secure: qqt5AaU0uPg+SxyvhEY1HNol1Tk71wwY5c2l5Wl624ipi1Ar5IW4qLuXB0QEPkIZ8YLLTO3jMizIMdaZeVS92AfFdpxF+yeTFc7rgCAWAWCPAKkMTT6RniWWsQzFHoeCuNGJEOeu6KZ2qB8H2KGULqAAjMTqmI7PA4LRO0KU9q7JP7or/NrdzXzDaa4eOYdjfIKTjaR1RYvaNZoDV9zYPEuptDQ/eN/Srdt48nDxWG436S5OaulIuWDR+JlDOYuGocfNDKmfPgLIbZH8vo/r8k1ANLOJQLArQtSxK1dSik+OyouRGojhyXTqRoSlnhFxoWWrbxlyWR9Jh3H3RXnRL6fVfPWMyqIjdwTeDhUyxWPStIDy3JrcWhAeDKTHYDBDntGnjrhHUegsVY/yGVQg+/tQI3sipuliEV/C6g6RulqFRon3+05Xz/cLObFVAbTCezq+5f9sb5vq4h7FPoaB89EoBwSjq9Y/mc8ge/pHcQiyEBxxBYAWsR9LGBgoff6bG4haN9Yu7CT5zaH33QdmMezVAWhjlwILRuZax5Jv5JPZh53SuaRgj1qiVDt80oxcEYkE+GFPZ3A6PlM7/CT+G6oVctRwIFpKWsUYcgTVKEHNSDBuo2Z++GXfOSFjFwSvDT3HjOpIRiqJ+JvKvXTK/XtCqA2pGMYGZ/+9Eg5ImLg=
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - chmod -R 777 ./publishToMavenRepository.sh
-  - ./publishToMavenRepository.sh

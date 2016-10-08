@@ -3,7 +3,6 @@ version '0.0.1-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'groovy'
-apply plugin: 'nexus'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,55 +30,4 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
     testCompile "org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE"
     testCompile "cglib:cglib-nodep:3.2.4"
-}
-
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.6.1'
-    }
-}
-
-modifyPom {
-    project {
-        name 'DataInspector'
-        description 'Publishes the metadata of your Spring Boot application entities'
-        url 'https://github.com/elgohr/DataInspector'
-        packaging 'jar'
-        licenses {
-            license {
-                name 'MIT License'
-                url 'http://www.opensource.org/licenses/mit-license.php'
-                distribution 'repo'
-            }
-        }
-        scm {
-            url 'https://github.com/elgohr/DataInspector'
-            connection 'scm:git:https://github.com/elgohr/DataInspector.git'
-            developerConnection 'scm:git@github.com:elgohr/DataInspector.git'
-        }
-        developers {
-            developer {
-                id 'elgohr'
-                name 'Lars Gohr'
-            }
-        }
-        dependencies {
-            compile "org.springframework:spring-web:4.3.3.RELEASE"
-            compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
-            compile "javax.persistence:persistence-api:1.0"
-            compile "org.reflections:reflections:0.9.10"
-        }
-    }
-}
-
-nexus {
-    attachSources = true
-    attachTests = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
