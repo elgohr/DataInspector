@@ -16,13 +16,14 @@ public class JpaEntityInspector extends AbstractDataInspector {
     private final static String inspectorName = "persistence";
 
     private Set<Class<?>> entityClasses;
-    private List blockedFields;
+    private final List blockedFields;
 
     public JpaEntityInspector() {
         entityClasses = new Reflections("")
                 .getTypesAnnotatedWith(Entity.class);
         blockedFields = Arrays.asList("$staticClassInfo", "__$stMC",
-                "metaClass", "this$0", "$staticClassInfo$", "$callSiteArray");
+                "metaClass", "this$0", "$staticClassInfo$", "$callSiteArray",
+                "$jacocoData");
     }
 
     @Override

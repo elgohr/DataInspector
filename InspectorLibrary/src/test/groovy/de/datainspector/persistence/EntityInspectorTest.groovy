@@ -6,6 +6,7 @@ import spock.lang.Specification
 class EntityInspectorTest extends Specification {
 
     JpaEntityInspector inspector
+    def dataObjects
 
     def setup() {
         inspector = new JpaEntityInspector()
@@ -46,7 +47,8 @@ class EntityInspectorTest extends Specification {
     def "should not return the standard fields of the classes"() {
         when:
         def standardFields = Arrays.asList('$staticClassInfo', '__$stMC',
-                'metaClass', 'this$0', '$staticClassInfo$', '$callSiteArray')
+                'metaClass', 'this$0', '$staticClassInfo$', '$callSiteArray'
+                , '$jacocoData')
         def attributes = inspector.getDataObjects().getChildren()
         then:
         standardFields.forEach({
