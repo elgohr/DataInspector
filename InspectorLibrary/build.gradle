@@ -4,6 +4,7 @@ version '0.0.1-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'jacoco'
+apply plugin: 'nexus'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -12,6 +13,16 @@ jar {
     // Package with dependencies
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.6.1'
     }
 }
 
