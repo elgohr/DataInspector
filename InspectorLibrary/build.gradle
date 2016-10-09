@@ -24,11 +24,10 @@ dependencies {
     compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
     compile "javax.persistence:persistence-api:1.0"
     compile "org.reflections:reflections:0.9.10"
-    compile "javax.servlet:javax.servlet-api:3.0.1"
 
     testCompile "org.codehaus.groovy:groovy-all:2.4.1"
-    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
-    testCompile "org.spockframework:spock-spring:1.0-groovy-2.4"
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
+    testCompile "org.spockframework:spock-spring:1.1-groovy-2.4-rc-2"
     testCompile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
     testCompile "org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE"
     testCompile "cglib:cglib-nodep:3.2.4"

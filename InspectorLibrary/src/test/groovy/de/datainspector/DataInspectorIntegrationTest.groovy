@@ -56,7 +56,7 @@ class DataInspectorIntegrationTest extends Specification {
                         '}'))
     }
 
-    def "should return http 500, when exception occurs" () {
+    def "should return http 500, when exception occurs"() {
         when:
         def response = mockMvc.perform(get('/data'))
         then:

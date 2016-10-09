@@ -14,9 +14,8 @@ import java.util.Set;
 public class JpaEntityInspector extends AbstractDataInspector {
 
     private final static String inspectorName = "persistence";
-
-    private Set<Class<?>> entityClasses;
     private final List blockedFields;
+    private Set<Class<?>> entityClasses;
 
     public JpaEntityInspector() {
         entityClasses = new Reflections("")

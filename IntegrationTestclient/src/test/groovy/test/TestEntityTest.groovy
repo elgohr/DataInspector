@@ -12,7 +12,7 @@ class TestEntityTest extends Specification {
         testEntity = new TestEntity()
     }
 
-    def "TestEntity must be a javax.persistence.Entity" () {
+    def "TestEntity must be a javax.persistence.Entity"() {
         when:
         def classAnnotations = testEntity.class.annotations
         then:
@@ -21,7 +21,7 @@ class TestEntityTest extends Specification {
         }
     }
 
-    def "TestEntity must contain fields" () {
+    def "TestEntity must contain fields"() {
         when:
         def declaredFields = testEntity.class.getDeclaredFields()
         then:

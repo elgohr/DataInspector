@@ -2,10 +2,7 @@ import de.datainspector.DataInspectorController
 import de.datainspector.businessobject.DataObject
 import de.datainspector.persistence.JpaEntityInspector
 import groovy.json.JsonSlurper
-import org.springframework.http.HttpStatus
 import spock.lang.Specification
-
-import javax.servlet.http.HttpServletResponse
 
 class DataInspectorControllerTest extends Specification {
 
@@ -40,12 +37,4 @@ class DataInspectorControllerTest extends Specification {
         json.children[0].children[0].children[1].name == "attribute2"
     }
 
-    def "should return http 500 on exception" () {
-        given:
-        def servletResponse = Mock(HttpServletResponse)
-        when:
-        entityInspectorController.handleExceptions(servletResponse)
-        then:
-        1 * servletResponse.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value())
-    }
 }
