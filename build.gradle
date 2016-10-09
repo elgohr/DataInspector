@@ -22,9 +22,9 @@ assemble() {
     integrationBuild.mustRunAfter integrationCopyTask
     inspectorTestReport.mustRunAfter inspectorTest
     integrationTestReport.mustRunAfter integrationTest
-    inspectorPublishingTask.mustRunAfter inspectorTestReport
-    inspectorPublishingTask.mustRunAfter integrationTestReport
+    //inspectorPublishingTask.mustRunAfter inspectorTestReport
+    //inspectorPublishingTask.mustRunAfter integrationTestReport
     dependsOn integrationBuild, inspectorBuild, integrationCopyTask,
             inspectorTest, inspectorTestReport, integrationTest,
-            integrationTestReport, inspectorPublishingTask
+            integrationTestReport//, inspectorPublishingTask
 }
