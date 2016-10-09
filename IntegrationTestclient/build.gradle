@@ -1,4 +1,4 @@
-group 'de.elgohr'
+group 'com.github.elgohr'
 version '1.0'
 
 apply plugin: 'java'
