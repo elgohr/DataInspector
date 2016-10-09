@@ -4,6 +4,7 @@ version '1.0'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'spring-boot'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,4 +32,10 @@ dependencies {
     testCompile "org.spockframework:spock-spring:1.0-groovy-2.4"
     testCompile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
     testCompile "org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
 }

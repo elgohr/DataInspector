@@ -11,9 +11,16 @@ task copyLibraryForTest(type: Copy) {
 
 assemble() {
     def inspectorBuild = tasks.getByPath("InspectorLibrary:build")
+    def inspectorTest = tasks.getByPath("InspectorLibrary:test")
+    def inspectorTestReport = tasks.getByPath("InspectorLibrary:jacocoTestReport")
     def integrationBuild = tasks.getByPath("IntegrationTestclient:build")
+    def integrationTest = tasks.getByPath("IntegrationTestclient:test")
+    def integrationTestReport = tasks.getByPath("IntegrationTestclient:jacocoTestReport")
     def integrationCopyTask = tasks.getByPath("copyLibraryForTest")
     integrationCopyTask.mustRunAfter inspectorBuild
     integrationBuild.mustRunAfter integrationCopyTask
-    dependsOn integrationBuild, inspectorBuild, integrationCopyTask
+    inspectorTestReport.mustRunAfter inspectorTest
+    integrationTestReport.mustRunAfter integrationTest
+    dependsOn integrationBuild, inspectorBuild, integrationCopyTask,
+            inspectorTest, inspectorTestReport, integrationTest, integrationTestReport
 }
