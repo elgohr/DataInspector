@@ -11,14 +11,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DataInspectorIntegrationTest extends Specification {
 
-    def "should publish the entities on an endpoint in json format"() {
-        given:
-        def entityInspector = Mock(JpaEntityInspector)
-        def dataInspectorController = new DataInspectorController(entityInspector)
-        def mockMvc = MockMvcBuilders
+    def entityInspector
+    def dataInspectorController
+    def mockMvc
+
+    def setup() {
+        entityInspector = Mock(JpaEntityInspector)
+        dataInspectorController = new DataInspectorController(entityInspector)
+        mockMvc = MockMvcBuilders
                 .standaloneSetup(dataInspectorController)
                 .build()
+    }
 
+    def "should publish the entities on an endpoint in json format"() {
         when:
         def response = mockMvc.perform(get('/data'))
 
@@ -49,5 +54,16 @@ class DataInspectorIntegrationTest extends Specification {
                         '    }]' +
                         '  }]' +
                         '}'))
+    }
+
+    def "should return http 500, when exception occurs" () {
+        when:
+        def response = mockMvc.perform(get('/data'))
+        then:
+        1 * entityInspector.getDataObjects() >> {
+            throw new IOException()
+        }
+        response
+                .andExpect(status().is5xxServerError())
     }
 }

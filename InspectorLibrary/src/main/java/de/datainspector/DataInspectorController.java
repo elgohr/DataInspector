@@ -5,10 +5,15 @@ import de.datainspector.persistence.JpaEntityInspector;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 public class DataInspectorController {
@@ -29,14 +34,14 @@ public class DataInspectorController {
             value = "/data",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String publishInspectedData() {
+    public String publishInspectedData() throws IOException {
         DataObject applicationObject = new DataObject(applicationName);
         applicationObject.addChild(jpaEntityInspector.getDataObjects());
-        try {
-            return objectMapper.writeValueAsString(applicationObject);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
+        return objectMapper.writeValueAsString(applicationObject);
+    }
+
+    @ExceptionHandler(IOException.class)
+    void handleExceptions(HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 }

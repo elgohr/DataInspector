@@ -2,15 +2,25 @@ import de.datainspector.DataInspectorController
 import de.datainspector.businessobject.DataObject
 import de.datainspector.persistence.JpaEntityInspector
 import groovy.json.JsonSlurper
+import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
+import javax.servlet.http.HttpServletResponse
+
 class DataInspectorControllerTest extends Specification {
+
+    def entityInspector
+    def entityInspectorController
+
+    def setup() {
+        entityInspector = Mock(JpaEntityInspector)
+        entityInspectorController = new DataInspectorController(entityInspector)
+    }
 
     def "should publish the entities on an endpoint"() {
         given:
         def jsonSlurper = new JsonSlurper()
-        def entityInspector = Mock(JpaEntityInspector)
-        def entityInspectorController = new DataInspectorController(entityInspector)
+
         when:
         def json = jsonSlurper.parseText(entityInspectorController.publishInspectedData())
 
@@ -28,5 +38,14 @@ class DataInspectorControllerTest extends Specification {
         json.children[0].children[0].name == "class1"
         json.children[0].children[0].children[0].name == "attribute1"
         json.children[0].children[0].children[1].name == "attribute2"
+    }
+
+    def "should return http 500 on exception" () {
+        given:
+        def servletResponse = Mock(HttpServletResponse)
+        when:
+        entityInspectorController.handleExceptions(servletResponse)
+        then:
+        1 * servletResponse.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value())
     }
 }
