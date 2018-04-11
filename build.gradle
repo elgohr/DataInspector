@@ -13,7 +13,6 @@ assemble() {
     def inspectorBuild = tasks.getByPath("InspectorLibrary:build")
     def inspectorTest = tasks.getByPath("InspectorLibrary:test")
     def inspectorTestReport = tasks.getByPath("InspectorLibrary:jacocoTestReport")
-    def inspectorPublishingTask = tasks.getByPath("InspectorLibrary:uploadArchives")
     def integrationBuild = tasks.getByPath("IntegrationTestclient:build")
     def integrationTest = tasks.getByPath("IntegrationTestclient:test")
     def integrationTestReport = tasks.getByPath("IntegrationTestclient:jacocoTestReport")
@@ -22,9 +21,7 @@ assemble() {
     integrationBuild.mustRunAfter integrationCopyTask
     inspectorTestReport.mustRunAfter inspectorTest
     integrationTestReport.mustRunAfter integrationTest
-    inspectorPublishingTask.mustRunAfter inspectorTestReport
-    inspectorPublishingTask.mustRunAfter integrationTestReport
     dependsOn integrationBuild, inspectorBuild, integrationCopyTask,
             inspectorTest, inspectorTestReport, integrationTest,
-            integrationTestReport, inspectorPublishingTask
+            integrationTestReport
 }
