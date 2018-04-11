@@ -15,32 +15,22 @@ jar {
     }
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.6.1'
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compileOnly "org.springframework:spring-web:4.3.3.RELEASE"
+    compileOnly "org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE"
     compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
-    compile "javax.persistence:persistence-api:1.0"
-    compile "org.reflections:reflections:0.9.10"
+    compile "javax.persistence:persistence-api:1.0.2"
+    compile "org.reflections:reflections:0.9.11"
 
-    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.codehaus.groovy:groovy-all:2.4.15"
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
     testCompile "org.spockframework:spock-spring:1.1-groovy-2.4-rc-2"
-    testCompile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
-    testCompile "org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE"
-    testCompile "cglib:cglib-nodep:3.2.4"
+    testCompile "org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE"
+    testCompile "org.springframework.boot:spring-boot-starter-test:2.0.1.RELEASE"
+    testCompile "cglib:cglib-nodep:3.2.6"
 }
 
 jacocoTestReport {
