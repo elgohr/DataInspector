@@ -1,5 +1,5 @@
 group 'com.github.elgohr'
-version '0.0.1'
+version null
 
 apply plugin: 'java'
 apply plugin: 'groovy'
